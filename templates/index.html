@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeJay GENAI Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Smooth scroll chat to bottom */
+    #chatWindow {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">CodeJay</h1>
+      <nav class="space-x-6 hidden md:block">
+        <a href="#features" class="hover:text-blue-600">Features</a>
+        <a href="#team" class="hover:text-blue-600">Team</a>
+        <a href="#chat" class="hover:text-blue-600">Chat</a>
+      </nav>
+      <a href="#chat" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Chat Now</a>
+    </div>
+  </header>
+
+  <!-- Chat Section with Sidebar -->
+  <section id="chat"
+    class="flex-1 py-12 bg-gradient-to-r from-purple-400 via-pink-300 to-yellow-200 animate-gradient-x">
+    <div class="max-w-6xl mx-auto flex h-[80vh] rounded-2xl shadow-2xl overflow-hidden border border-gray-300">
+
+      <!-- Left Sidebar (Black & Gray Gradient) -->
+      <div
+        class="w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white flex flex-col justify-between">
+
+        <!-- Sidebar Top -->
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-6 text-white">⚡ CodeJay</h3>
+          <ul class="space-y-4">
+            <!-- Chat selected -->
+            <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-700 cursor-pointer transition">
+              <span class="text-xl">💬</span>
+              <span class="font-medium">Chat</span>
+            </li>
+            <li class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700 cursor-pointer transition">
+              <span class="text-xl">📚</span>
+              <span class="font-medium">History</span>
+            </li>
+            <li class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700 cursor-pointer transition">
+              <span class="text-xl">⚙️</span>
+              <span class="font-medium">Settings</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sidebar Bottom -->
+        <div class="p-6 border-t border-gray-600">
+          <ul class="space-y-3">
+            <li class="flex items-center space-x-3 hover:text-red-400 cursor-pointer transition">
+              <span class="text-xl">🚪</span>
+              <span class="font-medium">Logout</span>
+            </li>
+            <li class="flex items-center space-x-3 hover:text-blue-400 cursor-pointer transition">
+              <span class="text-xl">❓</span>
+              <span class="font-medium">Help</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+      <!-- Main Chat Pane -->
+      <div class="flex-1 flex flex-col bg-gradient-to-b from-gray-100 via-gray-200 to-gray-50">
+        <!-- Chat Header -->
+        <div class="p-4 border-b border-gray-700 text-white font-semibold flex justify-between items-center 
+               bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 shadow-lg">
+          <h2 class="text-lg">🤖 CodeJay GENAI Chatbot</h2>
+          <span class="text-sm opacity-80">AI Powered</span>
+        </div>
+
+
+
+        <!-- Chat Window -->
+        <div id="chatWindow" class="flex-1 p-6 overflow-y-auto space-y-4 flex flex-col">
+          <!-- Initial bot message -->
+          <div class="flex justify-start flex-col">
+            <div class="text-sm text-gray-400 mb-1">🤖 CodeJay</div>
+            <div
+              class="bg-gradient-to-r from-purple-200 to-pink-200 text-gray-900 px-4 py-2 rounded-xl max-w-xs shadow-md">
+              Hi! I’m CodeJay’s assistant. Ask me anything about coding, AI, or tech tips!
+            </div>
+          </div>
+
+          {% if question %}
+          <!-- User Message on the right -->
+          <div class="flex justify-end flex-col items-end">
+            <div class="text-sm text-gray-400 mb-1">🧑‍💻 You</div>
+            <div
+              class="bg-gradient-to-r from-green-200 to-green-300 text-gray-900 px-4 py-2 rounded-xl max-w-xs shadow-md">
+              {{ question }}
+            </div>
+          </div>
+          {% endif %}
+
+          {% if response %}
+          <!-- Bot Response on the left -->
+          <div class="flex justify-start flex-col">
+            <div class="text-sm text-gray-400 mb-1">🤖 CodeJay</div>
+            <div
+              class="bg-gradient-to-r from-pink-100 via-purple-200 to-blue-200 text-gray-900 px-4 py-2 rounded-xl max-w-xs shadow-md">
+              {{ response }}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Chat Input -->
+        <form method="POST" action="/" class="border-t border-gray-700 p-4 flex space-x-2">
+          <input type="text" name="question" placeholder="Type your message here..."
+            class="flex-1 px-4 py-2 rounded-xl border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-800 text-white"
+            required>
+          <button type="submit"
+            class="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">Send</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h3 class="text-3xl font-bold mb-8">Features</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">💡 Coding Tips & Tricks</div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">🤖 AI-Powered Chat Responses</div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition">📚 Learn & Explore Code Easily</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-16 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h3 class="text-3xl font-bold mb-8">Meet the Team</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold">Alice</h4>
+          <p class="text-sm text-gray-600">AI Engineer</p>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold">Bob</h4>
+          <p class="text-sm text-gray-600">Backend Developer</p>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold">Charlie</h4>
+          <p class="text-sm text-gray-600">Frontend Designer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6 text-center">
+    <p>&copy; 2025 CodeJay. All rights reserved.</p>
+  </footer>
+
+  <!-- Auto-scroll chat script -->
+  <script>
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  </script>
+</body>
+
+</html>
